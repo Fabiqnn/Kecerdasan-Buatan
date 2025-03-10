@@ -40,5 +40,6 @@ subsidi_simulasi.input['produksi_padi'] = 5.0
 subsidi_simulasi.compute()
 
 # Output hasil
+print("Fuzzy Mamdani Untuk Menentukan Tingkat Subsidi")
 print(f"Tingkat subsidi yang diberikan: {subsidi_simulasi.output['subsidi']:.2f} juta rupiah per hektar")
 subsidi.view(sim=subsidi_simulasi)
