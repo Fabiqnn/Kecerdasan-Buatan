@@ -70,23 +70,134 @@ mu_irigasi_baik= fuzz.interp_membership(x_irigasi, irigasi_baik, irigasiLahan)
 mu_irigasi_sangat_baik= fuzz.interp_membership(x_irigasi, irigasi_sangat_baik, irigasiLahan)
 
 # Inferensi rule
-rules = []
-for luas in [mu_luasLahan_sangat_kecil, mu_luasLahan_kecil, mu_luasLahan_sedang, mu_luasLahan_besar, mu_luasLahan_sangat_besar]:
-    for produksi in [mu_produksiPadi_sangat_rendah, mu_produksiPadi_rendah, mu_produksiPadi_sedang, mu_produksiPadi_tinggi, mu_produksiPadi_sangat_tinggi]:
-        for irigasi in [mu_irigasi_sangat_buruk, mu_irigasi_buruk, mu_irigasi_sedang, mu_irigasi_baik, mu_irigasi_sangat_baik]:
-            strength = min(luas, produksi, irigasi)
-            
-            if strength > 0:
-                if luas in [mu_luasLahan_sangat_kecil] and produksi in [mu_produksiPadi_sangat_rendah] and irigasi in [mu_irigasi_sangat_buruk]:
-                    rules.append((strength, tengahSubsidi_sangatTinggi))
-                elif luas in [mu_luasLahan_kecil] and produksi in [mu_produksiPadi_rendah] and irigasi in [mu_irigasi_buruk]:
-                    rules.append((strength, tengahSubsidi_tinggi))
-                elif luas in [mu_luasLahan_sedang] and produksi in [mu_produksiPadi_sedang] and irigasi in [mu_irigasi_sedang]:
-                    rules.append((strength, tengahSubsidi_sedang))
-                elif luas in [mu_luasLahan_besar] and produksi in [mu_produksiPadi_tinggi] and irigasi in [mu_irigasi_baik]:
-                    rules.append((strength, tengahSubsidi_rendah))
-                else:
-                    rules.append((strength, tengahSubsidi_sangatRendah))
+rules = [
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sedang, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sedang, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sedang, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sedang, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_rendah, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sedang, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sedang, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_tinggi, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_rendah, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sedang, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_rendah, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sedang, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_rendah, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sedang, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_buruk), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_rendah, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sedang, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_buruk), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sedang, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_tinggi, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_rendah, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sedang, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_tinggi, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_rendah, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sedang, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_rendah, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sedang, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sedang), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_rendah, mu_irigasi_sedang), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sedang, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sedang), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sedang, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_tinggi, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_rendah, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sedang, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_tinggi, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_rendah, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sedang, mu_irigasi_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_tinggi, mu_irigasi_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_tinggi, mu_irigasi_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_rendah, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sedang, mu_irigasi_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_tinggi, mu_irigasi_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_rendah, mu_irigasi_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sedang, mu_irigasi_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_tinggi, mu_irigasi_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sedang, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_rendah, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sedang, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_kecil, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_rendah, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sedang, mu_irigasi_sangat_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sedang, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_rendah, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sedang, mu_irigasi_sangat_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_besar, mu_produksiPadi_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_rendah, mu_irigasi_sangat_baik), tengahSubsidi_sangatTinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_rendah, mu_irigasi_sangat_baik), tengahSubsidi_tinggi),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sedang, mu_irigasi_sangat_baik), tengahSubsidi_sedang),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_rendah),
+    (min(mu_luasLahan_sangat_besar, mu_produksiPadi_sangat_tinggi, mu_irigasi_sangat_baik), tengahSubsidi_sangatRendah)
+]
+
 
 perkalian_atas = sum(rule[0] * rule[1] for rule in rules)
 pembagian_Bawah = sum(rule[0] for rule in rules)
@@ -95,8 +206,8 @@ if pembagian_Bawah != 0 :
     z_final = perkalian_atas / pembagian_Bawah
 else:
     z_final = 0
- 
 print(f"Tingkat Subsidi yang Diberikan Adalah {z_final:.2f} juta")
+
 
 # Grafik Fungsi Keanggotaan Luas Lahan
 plt.figure(figsize=(12, 9))
@@ -135,7 +246,7 @@ plt.plot(x_irigasi, irigasi_baik, label="Baik")
 plt.plot(x_irigasi, irigasi_sangat_baik, label="Sangat Baik")
 plt.axvline(x=irigasiLahan, color="black", linestyle='--', label="Input Data")
 plt.title("Fungsi Keanggotaan Irigasi")
-plt.xlabel("Irigasi L/s")
+plt.xlabel("Irigasi (L/s)")
 plt.ylabel("Derajat Keanggotaan")
 plt.legend()
 
